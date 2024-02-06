@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/include"
+      layout:decorate="~{include/layout}">
+    
+<head>
+    <title>home</title>
+    <style>
+    	.testList li span + span {display: inline-block; margin-left: 10px;}
+    </style>
+    <script>
+    function insertList() {
+		let $inputName = $('#name');
+		let $inputEmail = $('#email');
+		
+		if(!$inputName.val()) return $inputName.focus();
+		if(!$inputEmail.val()) return $inputEmail.focus();
+		
+		let param = {
+			"name": $('#name').val(),
+			"email":  $('#email').val(),
+		};
+		$.ajax({
+		  type: 'POST',
+		  url: '/home/new',
+		  data: JSON.stringify(param),
+		  dataType: "json",
+		  contentType: "application/json; charset=UTF-8",
+		  cache: false,
+		  success: function(msg) {
+			  $(".testBox input").val("");
+			  reloadList();
+		  }
+		});
+	};
+	
+	function deleteList(target) {
+		$.ajax({
+		  type: 'DELETE',
+		  url: '/home/user?test_no=' + parseInt($(target).siblings(".test_no").text()),
+		  success: function(data) {
+			  $(target).parents("li").remove();
+		  }
+		});
+	}
+	
+	function reloadList() {
+		$.ajax({
+		  type: 'GET',
+		  url: '/home/list',
+		  success: function(data) {
+			  $(".testList").replaceWith(data);
+		  }
+		});
+	}
+    </script>
+</head>
+    <div layout:fragment="container" class="home">
+		
+		<h2 class="title">Home</h2>
+		<div class="content">
+            <ul  th:fragment="testList_wrap" class="testList">
+				<li th:each="item : ${testList}">
+				    <span th:text="${item.test_no}" class="test_no"></span>
+				    <span th:text="${item.name}"></span>
+				    <span th:text="${item.email}"></span>
+				    <button type="button" class="btn sm colorGyLine" onclick="deleteList(this)">X</button>
+				</li>
+            </ul>
+            <div class="testBox">
+	            <input type="text" id="name" name="name" autocomplete="off">
+	            <input type="text" id="email" name="email" autocomplete="email">
+	            <button type="button" onclick="insertList()" class="btn colorGy">test insert</button>
+            </div>
+		</div><!-- //content -->
+	</div><!-- //container -->
+</html>

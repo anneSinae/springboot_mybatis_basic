@@ -1,0 +1,10 @@
+		<header th:fragment="headerFragment">
+			<h1 class="logo">
+				<th:block th:replace="include/info :: .system_nm"></th:block>
+				<span><th:block th:replace="include/info :: .system_nmEn"></th:block></span>
+			</h1>
+			<nav th:replace="include/nav :: navFragment"></nav>
+			<div class="info_common">
+				<th:block th:replace="include/info :: .login_info"></th:block>
+			</div>
+		</header>

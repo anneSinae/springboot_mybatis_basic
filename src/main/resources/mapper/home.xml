@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.anne.wow.home.HomeRepository">
+
+	<select id="getTestList" resultType="hashmap">
+		select * from test
+	</select>
+
+	<insert id="insertTest" parameterType="com.anne.wow.model.Test">
+		insert into test(name, email) values(#{name}, #{email})
+	</insert>
+	
+	<delete id="deleteTest">
+		delete from test where test_no = #{test_no}
+	</delete>
+</mapper>
