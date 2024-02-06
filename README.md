@@ -1,6 +1,7 @@
 # Development Environment
 - Framework : Springboot
-- WAS : Tomcat (Springboot ����)
+- WAS : Tomcat (Springboot base embaded : but external tomcat intended)
+- Packaging : War(intended)
 - DB : mariaDB
 - IDE : Eclipse
 - Communication : REST api
